@@ -494,11 +494,7 @@ async function loadConcerts() {
 
   try {
 
-    if (
-      SUPABASE_URL === "https://ddlabynkdnaemvdfrmce.supabase.co" 
-      SUPABASE_KEY === "sb_publishable_zi8cKWC-0qIGVVcU3r6hyw_mL0cecoc"
-    ) {
-
+    if (!SUPABASE_URL || !SUPABASE_KEY) {
       throw new Error(
         "Supabase URL or Publishable Key is missing."
       );
