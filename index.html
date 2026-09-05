@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <title>Band Music Hub | Bangladesh Concerts</title>
 
   <style>
@@ -81,6 +80,7 @@
       font-size: 18px;
       max-width: 650px;
       margin: auto;
+      line-height: 1.6;
     }
 
     .search-box {
@@ -128,17 +128,18 @@
       border: 1px solid #303039;
       border-radius: 18px;
       padding: 35px;
-      margin-bottom: 60px;
+      margin-bottom: 70px;
     }
 
     .featured h2 {
       font-size: 32px;
-      margin-bottom: 15px;
+      margin-bottom: 18px;
     }
 
     .featured p {
       color: #b5b5bd;
-      margin: 8px 0;
+      margin: 9px 0;
+      line-height: 1.5;
     }
 
     .ticket-btn {
@@ -176,11 +177,12 @@
 
     .poster {
       height: 210px;
-      background: #24242c;
+      background: linear-gradient(135deg, #24242c, #17171d);
       display: flex;
       justify-content: center;
       align-items: center;
       color: #777780;
+      font-size: 15px;
     }
 
     .card-content {
@@ -195,7 +197,14 @@
     .info {
       color: #a8a8b0;
       font-size: 14px;
-      margin: 7px 0;
+      margin: 8px 0;
+    }
+
+    .description {
+      color: #9999a2;
+      font-size: 14px;
+      line-height: 1.5;
+      margin-top: 12px;
     }
 
     footer {
@@ -203,6 +212,7 @@
       text-align: center;
       padding: 35px 20px;
       color: #777780;
+      line-height: 1.7;
     }
 
     @media (max-width: 850px) {
@@ -251,7 +261,6 @@
 
   <header>
     <div class="navbar">
-
       <div class="logo">
         Band <span>Music Hub</span>
       </div>
@@ -260,37 +269,23 @@
         <a href="#home">Home</a>
         <a href="#concerts">Concerts</a>
       </nav>
-
     </div>
   </header>
 
-
   <section class="hero" id="home">
-
     <h1>
       Discover <span>Live Music</span> in Bangladesh
     </h1>
 
     <p>
-      Find upcoming concerts, live music events and ticket information
-      from across Bangladesh.
+      Find upcoming concerts, live music events and ticket information from across Bangladesh.
     </p>
 
     <div class="search-box">
-
-      <input
-        type="text"
-        placeholder="Search concerts..."
-      >
-
-      <button>
-        Search
-      </button>
-
+      <input type="text" placeholder="Search concerts...">
+      <button>Search</button>
     </div>
-
   </section>
-
 
   <section class="section">
 
@@ -305,14 +300,11 @@
       </h2>
 
       <p>📅 Date: Coming Soon</p>
-
       <p>⏰ Time: Coming Soon</p>
-
       <p>📍 Location: Chittagong, Bangladesh</p>
 
       <p>
-        Experience an unforgettable live music event featuring
-        amazing artists and bands.
+        Experience an unforgettable live music event featuring amazing artists and bands.
       </p>
 
       <a href="#" class="ticket-btn">
@@ -325,7 +317,6 @@
     <h2 class="section-title" id="concerts">
       Upcoming Concerts
     </h2>
-
 
     <div class="events">
 
@@ -350,7 +341,11 @@
           </p>
 
           <p class="info">
-            📍 Dhaka, Bangladesh
+            📍 Location: Dhaka, Bangladesh
+          </p>
+
+          <p class="description">
+            Enjoy an exciting night of live music and performances.
           </p>
 
           <a href="#" class="ticket-btn">
@@ -383,7 +378,11 @@
           </p>
 
           <p class="info">
-            📍 Dhaka, Bangladesh
+            📍 Location: Dhaka, Bangladesh
+          </p>
+
+          <p class="description">
+            A special music night featuring talented Bangladeshi artists.
           </p>
 
           <a href="#" class="ticket-btn">
@@ -416,7 +415,11 @@
           </p>
 
           <p class="info">
-            📍 Chittagong, Bangladesh
+            📍 Location: Chittagong, Bangladesh
+          </p>
+
+          <p class="description">
+            Experience powerful live performances from local bands.
           </p>
 
           <a href="#" class="ticket-btn">
@@ -431,16 +434,11 @@
 
   </section>
 
-
   <footer>
-
     © 2026 Band Music Hub
-
     <br>
-
     Bangladesh Concert & Music Events
-
   </footer>
 
 </body>
-    </html>
+</html>
