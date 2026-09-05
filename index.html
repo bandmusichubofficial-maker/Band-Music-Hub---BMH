@@ -1,275 +1,378 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Band Music Hub | Bangladesh Concerts</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+<title>Band Music Hub | Bangladesh Concerts</title>
 
-    body {
-      font-family: Arial, Helvetica, sans-serif;
-      background: #08080c;
-      color: #ffffff;
-    }
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-    a {
-      text-decoration: none;
-    }
+html {
+  scroll-behavior: smooth;
+}
 
-    header {
-      background: #101014;
-      border-bottom: 1px solid #27272f;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #08080c;
+  color: #ffffff;
+  line-height: 1.6;
+}
 
-    .navbar {
-      max-width: 1200px;
-      margin: auto;
-      padding: 18px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+a {
+  text-decoration: none;
+  color: inherit;
+}
 
-    .logo {
-      font-size: 24px;
-      font-weight: 800;
-    }
+/* HEADER */
 
-    .logo span {
-      color: #ff3b30;
-    }
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background: #101014;
+  border-bottom: 1px solid #292930;
+}
 
-    nav a {
-      color: #ddd;
-      margin-left: 25px;
-      font-size: 14px;
-    }
+.navbar {
+  max-width: 1200px;
+  margin: auto;
+  padding: 18px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-    nav a:hover {
-      color: #ff3b30;
-    }
+.logo {
+  font-size: 25px;
+  font-weight: 800;
+}
 
-    .hero {
-      max-width: 1200px;
-      margin: auto;
-      padding: 90px 20px 70px;
-      text-align: center;
-    }
+.logo span {
+  color: #ff3b30;
+}
 
-    .hero h1 {
-      font-size: 52px;
-      line-height: 1.1;
-      margin-bottom: 20px;
-    }
+nav {
+  display: flex;
+  gap: 25px;
+}
 
-    .hero h1 span {
-      color: #ff3b30;
-    }
+nav a {
+  color: #dddddf;
+  font-size: 15px;
+  font-weight: 600;
+}
 
-    .hero p {
-      color: #a5a5ad;
-      font-size: 18px;
-      max-width: 650px;
-      margin: auto;
-      line-height: 1.6;
-    }
+nav a:hover {
+  color: #ff3b30;
+}
 
-    .search-box {
-      max-width: 600px;
-      margin: 35px auto 0;
-      display: flex;
-      background: #15151b;
-      border: 1px solid #303039;
-      border-radius: 10px;
-      overflow: hidden;
-    }
+/* HERO */
 
-    .search-box input {
-      flex: 1;
-      padding: 15px;
-      background: transparent;
-      border: none;
-      outline: none;
-      color: white;
-      font-size: 15px;
-    }
+.hero {
+  max-width: 1200px;
+  margin: auto;
+  padding: 90px 20px 70px;
+  text-align: center;
+}
 
-    .search-box button {
-      background: #ff3b30;
-      color: white;
-      border: none;
-      padding: 0 22px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+.hero h1 {
+  font-size: 52px;
+  line-height: 1.1;
+  margin-bottom: 22px;
+}
 
-    .section {
-      max-width: 1200px;
-      margin: auto;
-      padding: 30px 20px 70px;
-    }
+.hero h1 span {
+  color: #ff3b30;
+}
 
-    .section-title {
-      font-size: 30px;
-      margin-bottom: 30px;
-    }
+.hero p {
+  max-width: 700px;
+  margin: auto;
+  color: #a5a5ad;
+  font-size: 18px;
+}
 
-    .featured {
-      background: linear-gradient(135deg, #202028, #101014);
-      border: 1px solid #303039;
-      border-radius: 18px;
-      padding: 35px;
-      margin-bottom: 70px;
-    }
+.search-box {
+  max-width: 650px;
+  margin: 35px auto 0;
+  display: flex;
+  background: #15151b;
+  border: 1px solid #303039;
+  border-radius: 10px;
+  overflow: hidden;
+}
 
-    .featured h2 {
-      font-size: 32px;
-      margin-bottom: 18px;
-    }
+.search-box input {
+  flex: 1;
+  min-width: 0;
+  padding: 16px;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #ffffff;
+  font-size: 16px;
+}
 
-    .featured p {
-      color: #b5b5bd;
-      margin: 9px 0;
-      line-height: 1.5;
-    }
+.search-box input::placeholder {
+  color: #777780;
+}
 
-    .ticket-btn {
-      display: inline-block;
-      margin-top: 20px;
-      background: #ff3b30;
-      color: white;
-      padding: 13px 24px;
-      border-radius: 8px;
-      font-weight: bold;
-    }
+.search-box button {
+  border: none;
+  background: #ff3b30;
+  color: #ffffff;
+  padding: 0 25px;
+  font-size: 15px;
+  font-weight: bold;
+  cursor: pointer;
+}
 
-    .events {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 22px;
-    }
+.search-box button:hover {
+  background: #e83228;
+}
 
-    .card {
-      background: #141419;
-      border: 1px solid #292930;
-      border-radius: 15px;
-      overflow: hidden;
-      transition: 0.2s;
-    }
+/* MAIN */
 
-    .card:hover {
-      transform: translateY(-4px);
-      border-color: #44444e;
-    }
+.section {
+  max-width: 1200px;
+  margin: auto;
+  padding: 30px 20px 80px;
+}
 
-    .poster {
-      height: 210px;
-      background: linear-gradient(135deg, #24242c, #17171d);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      color: #777780;
-      overflow: hidden;
-    }
+.section-title {
+  font-size: 32px;
+  margin-bottom: 30px;
+}
 
-    .poster img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
+/* FEATURED */
 
-    .card-content {
-      padding: 20px;
-    }
+.featured {
+  background: linear-gradient(135deg, #202028, #101014);
+  border: 1px solid #303039;
+  border-radius: 18px;
+  overflow: hidden;
+  margin-bottom: 70px;
+}
 
-    .card h3 {
-      font-size: 20px;
-      margin-bottom: 14px;
-    }
+.featured-image {
+  width: 100%;
+  max-height: 420px;
+  object-fit: cover;
+  display: block;
+}
 
-    .info {
-      color: #a8a8b0;
-      font-size: 14px;
-      margin: 8px 0;
-    }
+.featured-content {
+  padding: 32px;
+}
 
-    .description {
-      color: #9999a2;
-      font-size: 14px;
-      line-height: 1.5;
-      margin-top: 12px;
-    }
+.featured-content h2 {
+  font-size: 32px;
+  margin-bottom: 15px;
+}
 
-    .loading,
-    .empty {
-      color: #9999a2;
-      text-align: center;
-      padding: 40px 10px;
-    }
+.featured-content p {
+  color: #b5b5bd;
+  margin: 8px 0;
+}
 
-    footer {
-      border-top: 1px solid #27272f;
-      text-align: center;
-      padding: 35px 20px;
-      color: #777780;
-      line-height: 1.7;
-    }
+.description {
+  margin-top: 18px !important;
+  line-height: 1.7;
+}
 
-    @media (max-width: 850px) {
-      .events {
-        grid-template-columns: 1fr 1fr;
-      }
+.ticket-btn {
+  display: inline-block;
+  margin-top: 22px;
+  background: #ff3b30;
+  color: #ffffff;
+  padding: 13px 24px;
+  border-radius: 8px;
+  font-weight: bold;
+}
 
-      .hero h1 {
-        font-size: 40px;
-      }
-    }
+.ticket-btn:hover {
+  background: #e83228;
+}
 
-    @media (max-width: 600px) {
-      .navbar {
-        padding: 15px;
-      }
+/* EVENTS */
 
-      nav a {
-        margin-left: 12px;
-      }
+.events {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+}
 
-      .hero {
-        padding: 65px 20px 50px;
-      }
+.card {
+  background: #141419;
+  border: 1px solid #292930;
+  border-radius: 15px;
+  overflow: hidden;
+  transition: 0.2s;
+}
 
-      .hero h1 {
-        font-size: 34px;
-      }
+.card:hover {
+  transform: translateY(-4px);
+  border-color: #45454f;
+}
 
-      .events {
-        grid-template-columns: 1fr;
-      }
+.card-image {
+  width: 100%;
+  height: 210px;
+  object-fit: cover;
+  display: block;
+  background: #24242c;
+}
 
-      .featured {
-        padding: 25px;
-      }
+.no-image {
+  height: 210px;
+  background: #24242c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #777780;
+  font-size: 15px;
+}
 
-      .featured h2 {
-        font-size: 25px;
-      }
-    }
-  </style>
+.card-content {
+  padding: 20px;
+}
+
+.card h3 {
+  font-size: 20px;
+  margin-bottom: 14px;
+}
+
+.info {
+  color: #a8a8b0;
+  font-size: 14px;
+  margin: 7px 0;
+}
+
+.card-description {
+  color: #92929b;
+  font-size: 14px;
+  margin-top: 12px;
+}
+
+.small-ticket {
+  display: inline-block;
+  margin-top: 18px;
+  background: #ff3b30;
+  color: white;
+  padding: 10px 18px;
+  border-radius: 7px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.empty,
+.loading,
+.error {
+  text-align: center;
+  color: #9999a2;
+  padding: 45px 20px;
+}
+
+.error {
+  color: #ff7770;
+}
+
+/* FOOTER */
+
+footer {
+  border-top: 1px solid #27272f;
+  text-align: center;
+  padding: 35px 20px;
+  color: #777780;
+}
+
+/* MOBILE */
+
+@media (max-width: 850px) {
+
+  .events {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .hero h1 {
+    font-size: 40px;
+  }
+}
+
+@media (max-width: 600px) {
+
+  .navbar {
+    padding: 15px;
+  }
+
+  .logo {
+    font-size: 21px;
+  }
+
+  nav {
+    gap: 13px;
+  }
+
+  nav a {
+    font-size: 13px;
+  }
+
+  .hero {
+    padding: 65px 20px 50px;
+  }
+
+  .hero h1 {
+    font-size: 34px;
+  }
+
+  .hero p {
+    font-size: 16px;
+  }
+
+  .search-box {
+    margin-top: 28px;
+  }
+
+  .search-box input {
+    font-size: 14px;
+  }
+
+  .search-box button {
+    padding: 0 18px;
+  }
+
+  .section-title {
+    font-size: 28px;
+  }
+
+  .events {
+    grid-template-columns: 1fr;
+  }
+
+  .featured-content {
+    padding: 24px;
+  }
+
+  .featured-content h2 {
+    font-size: 25px;
+  }
+}
+</style>
 </head>
 
 <body>
 
+<!-- HEADER -->
+
 <header>
   <div class="navbar">
+
     <div class="logo">
       Band <span>Music Hub</span>
     </div>
@@ -278,9 +381,12 @@
       <a href="#home">Home</a>
       <a href="#concerts">Concerts</a>
     </nav>
+
   </div>
 </header>
 
+
+<!-- HERO -->
 
 <section class="hero" id="home">
 
@@ -289,141 +395,600 @@
   </h1>
 
   <p>
-    Find upcoming concerts, live music events and ticket information from across Bangladesh.
+    Find upcoming concerts, live music events and ticket information
+    from across Bangladesh.
   </p>
 
   <div class="search-box">
-    <input id="searchInput" type="text" placeholder="Search concerts...">
-    <button onclick="searchConcerts()">Search</button>
+
+    <input
+      id="searchInput"
+      type="text"
+      placeholder="Search concerts..."
+    >
+
+    <button onclick="searchConcerts()">
+      Search
+    </button>
+
   </div>
 
 </section>
 
 
+<!-- MAIN -->
+
 <section class="section">
+
+  <!-- FEATURED -->
 
   <h2 class="section-title">
     Featured Concert
   </h2>
 
   <div class="featured" id="featuredConcert">
+
     <div class="loading">
       Loading concert...
     </div>
+
   </div>
 
+
+  <!-- UPCOMING -->
 
   <h2 class="section-title" id="concerts">
     Upcoming Concerts
   </h2>
 
   <div class="events" id="concertList">
+
     <div class="loading">
       Loading concerts...
     </div>
+
   </div>
 
 </section>
 
 
+<!-- FOOTER -->
+
 <footer>
+
   © 2026 Band Music Hub
   <br>
   Bangladesh Concert & Music Events
+
 </footer>
 
 
 <script>
 
-  const SUPABASE_URL = "https://ddlabynkdnaemvdfrmce.supabase.co";
-  const SUPABASE_KEY = "sb_publishable_zi8cKWC-0qIGVVcU3r6hyw_mL0cecoc";
+/* =====================================================
+   SUPABASE SETTINGS
+   ONLY CHANGE THESE TWO LINES
+   ===================================================== */
 
-  let allConcerts = [];
+const SUPABASE_URL = "https://ddlabynkdnaemvdfrmce.supabase.co";
+
+const SUPABASE_KEY = "sb_publishable_zi8cKWC-0qIGVVcU3r6hyw_mL0cecoc";
 
 
-  async function loadConcerts() {
+/* =====================================================
+   WEBSITE DATA
+   ===================================================== */
 
-    try {
+let allConcerts = [];
 
-      const response = await fetch(
-        SUPABASE_URL + "/rest/v1/Band%20Music%20Hub?select=*",
-        {
-          headers: {
-            "apikey": SUPABASE_KEY,
-            "Authorization": "Bearer " + SUPABASE_KEY
-          }
-        }
+
+/* =====================================================
+   LOAD CONCERTS FROM SUPABASE
+   ===================================================== */
+
+async function loadConcerts() {
+
+  const featuredBox =
+    document.getElementById("featuredConcert");
+
+  const concertList =
+    document.getElementById("concertList");
+
+  try {
+
+    if (
+      SUPABASE_URL === "PASTE_YOUR_SUPABASE_URL_HERE" ||
+      SUPABASE_KEY === "PASTE_YOUR_SUPABASE_PUBLISHABLE_KEY_HERE"
+    ) {
+
+      throw new Error(
+        "Supabase URL or Publishable Key is missing."
       );
 
+    }
 
-      if (!response.ok) {
-        throw new Error("Unable to load concerts");
+
+    const tableName =
+      encodeURIComponent("Band Music Hub");
+
+
+    const url =
+      SUPABASE_URL +
+      "/rest/v1/" +
+      tableName +
+      "?select=*";
+
+
+    const response =
+      await fetch(url, {
+
+        method: "GET",
+
+        headers: {
+
+          "apikey": SUPABASE_KEY,
+
+          "Authorization":
+            "Bearer " + SUPABASE_KEY,
+
+          "Content-Type":
+            "application/json"
+
+        }
+
+      });
+
+
+    if (!response.ok) {
+
+      const errorText =
+        await response.text();
+
+      throw new Error(
+        "Supabase Error: " +
+        response.status +
+        " " +
+        errorText
+      );
+
+    }
+
+
+    const data =
+      await response.json();
+
+
+    if (!Array.isArray(data)) {
+
+      throw new Error(
+        "Supabase returned invalid data."
+      );
+
+    }
+
+
+    allConcerts = data;
+
+
+    displayFeatured(data);
+
+    displayConcerts(data);
+
+
+  } catch (error) {
+
+    console.error(error);
+
+
+    featuredBox.innerHTML = `
+      <div class="error">
+        Unable to load featured concert.
+        <br><br>
+        Please check Supabase settings.
+      </div>
+    `;
+
+
+    concertList.innerHTML = `
+      <div class="error">
+        Unable to load concerts.
+        <br>
+        Please check Supabase settings.
+      </div>
+    `;
+
+  }
+
+}
+
+
+/* =====================================================
+   GET CONCERT NAME
+   ===================================================== */
+
+function getName(concert) {
+
+  return (
+    concert.title ||
+    concert.concert ||
+    concert.name ||
+    "Untitled Concert"
+  );
+
+}
+
+
+/* =====================================================
+   FORMAT DATE
+   ===================================================== */
+
+function formatDate(dateValue) {
+
+  if (!dateValue) {
+    return "Coming Soon";
+  }
+
+  try {
+
+    const date =
+      new Date(dateValue + "T00:00:00");
+
+    if (isNaN(date.getTime())) {
+      return dateValue;
+    }
+
+    return date.toLocaleDateString(
+      "en-BD",
+      {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      }
+    );
+
+  } catch {
+
+    return dateValue;
+
+  }
+
+}
+
+
+/* =====================================================
+   DISPLAY FEATURED CONCERT
+   ===================================================== */
+
+function displayFeatured(data) {
+
+  const box =
+    document.getElementById("featuredConcert");
+
+
+  if (!data || data.length === 0) {
+
+    box.innerHTML = `
+      <div class="empty">
+        No featured concert available.
+      </div>
+    `;
+
+    return;
+  }
+
+
+  const concert =
+    data[0];
+
+
+  const name =
+    getName(concert);
+
+
+  const image =
+    concert.image_url;
+
+
+  const ticket =
+    concert.ticket_url;
+
+
+  box.innerHTML = `
+
+    ${
+      image
+      ?
+      `<img
+        src="${escapeHTML(image)}"
+        class="featured-image"
+        alt="${escapeHTML(name)}"
+        onerror="this.style.display='none'"
+      >`
+      :
+      ""
+    }
+
+
+    <div class="featured-content">
+
+      <h2>
+        ${escapeHTML(name)}
+      </h2>
+
+
+      <p>
+        📅 Date:
+        ${escapeHTML(formatDate(concert.date))}
+      </p>
+
+
+      <p>
+        ⏰ Time:
+        ${escapeHTML(concert.time || "Coming Soon")}
+      </p>
+
+
+      <p>
+        📍 Location:
+        ${escapeHTML(concert.location || "Bangladesh")}
+      </p>
+
+
+      <p class="description">
+        ${escapeHTML(
+          concert.description ||
+          "Experience an unforgettable live music event."
+        )}
+      </p>
+
+
+      ${
+        ticket
+        ?
+        `<a
+          href="${escapeHTML(ticket)}"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="ticket-btn"
+        >
+          Get Tickets
+        </a>`
+        :
+        ""
+      }
+
+    </div>
+
+  `;
+
+}
+
+
+/* =====================================================
+   DISPLAY CONCERT CARDS
+   ===================================================== */
+
+function displayConcerts(data) {
+
+  const list =
+    document.getElementById("concertList");
+
+
+  if (!data || data.length === 0) {
+
+    list.innerHTML = `
+      <div class="empty">
+        No upcoming concerts available.
+      </div>
+    `;
+
+    return;
+  }
+
+
+  list.innerHTML = "";
+
+
+  data.forEach(function(concert) {
+
+    const name =
+      getName(concert);
+
+
+    const image =
+      concert.image_url;
+
+
+    const ticket =
+      concert.ticket_url;
+
+
+    const card =
+      document.createElement("div");
+
+
+    card.className = "card";
+
+
+    card.innerHTML = `
+
+      ${
+        image
+        ?
+        `<img
+          src="${escapeHTML(image)}"
+          class="card-image"
+          alt="${escapeHTML(name)}"
+          onerror="this.outerHTML='<div class=\\'no-image\\'>Concert Poster</div>'"
+        >`
+        :
+        `<div class="no-image">
+          Concert Poster
+        </div>`
       }
 
 
-      const data = await response.json();
+      <div class="card-content">
 
-      allConcerts = data;
+        <h3>
+          ${escapeHTML(name)}
+        </h3>
 
-      displayFeatured(data);
-      displayConcerts(data);
 
-    } catch (error) {
+        <p class="info">
+          📅 ${escapeHTML(formatDate(concert.date))}
+        </p>
 
-      document.getElementById("featuredConcert").innerHTML =
-        '<div class="empty">Concert information is currently unavailable.</div>';
 
-      document.getElementById("concertList").innerHTML =
-        '<div class="empty">Unable to load concerts.</div>';
+        <p class="info">
+          ⏰ ${escapeHTML(concert.time || "Coming Soon")}
+        </p>
 
-      console.log(error);
 
-    }
+        <p class="info">
+          📍 ${escapeHTML(concert.location || "Bangladesh")}
+        </p>
 
+
+        ${
+          concert.description
+          ?
+          `<p class="card-description">
+            ${escapeHTML(concert.description)}
+          </p>`
+          :
+          ""
+        }
+
+
+        ${
+          ticket
+          ?
+          `<a
+            href="${escapeHTML(ticket)}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="small-ticket"
+          >
+            Buy Tickets
+          </a>`
+          :
+          ""
+        }
+
+      </div>
+
+    `;
+
+
+    list.appendChild(card);
+
+  });
+
+}
+
+
+/* =====================================================
+   SEARCH
+   ===================================================== */
+
+function searchConcerts() {
+
+  const input =
+    document
+      .getElementById("searchInput")
+      .value
+      .trim()
+      .toLowerCase();
+
+
+  if (!input) {
+
+    displayConcerts(allConcerts);
+
+    return;
   }
 
 
-  function getName(concert) {
+  const results =
+    allConcerts.filter(function(concert) {
 
-    return concert.title ||
-           concert.concert ||
-           concert.name ||
-           "Untitled Concert";
+      const text = [
 
+        concert.title,
+        concert.concert,
+        concert.name,
+        concert.location,
+        concert.description
+
+      ]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
+
+
+      return text.includes(input);
+
+    });
+
+
+  displayConcerts(results);
+
+
+  document
+    .getElementById("concerts")
+    .scrollIntoView({
+      behavior: "smooth"
+    });
+
+}
+
+
+/* =====================================================
+   SEARCH WITH ENTER KEY
+   ===================================================== */
+
+document
+  .getElementById("searchInput")
+  .addEventListener("keydown", function(event) {
+
+    if (event.key === "Enter") {
+
+      searchConcerts();
+
+    }
+
+  });
+
+
+/* =====================================================
+   BASIC HTML SAFETY
+   ===================================================== */
+
+function escapeHTML(value) {
+
+  if (value === null || value === undefined) {
+    return "";
   }
 
 
-  function displayFeatured(data) {
+  return String(value)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
 
-    const box = document.getElementById("featuredConcert");
-
-    if (!data || data.length === 0) {
-
-      box.innerHTML =
-        '<div class="empty">No featured concert available.</div>';
-
-      return;
-    }
+}
 
 
-    const concert = data[0];
+/* =====================================================
+   START WEBSITE
+   ===================================================== */
 
-    const name = getName(concert);
+loadConcerts();
 
-    box.innerHTML = `
+</script>
 
-      <h2>${name}</h2>
-
-      <p>📅 Date: ${concert.date || "Coming Soon"}</p>
-
-      <p>⏰ Time: ${concert.time || "Coming Soon"}</p>
-
-      <p>📍 Location: ${concert.location || "Bangladesh"}</p>
-
-      <p>
-        ${concert.description || "Experience an unforgettable live music event."}
-      </p>
-
-      ${
-        concert.ticket_url
-        ? `<a href="${concert.ticket_url}" target="_blank" class="
+</body>
+</html>
