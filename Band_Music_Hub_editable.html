@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Band Music Hub | Bangladesh Concerts</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#08080c;color:white}
+header{background:#111116;border-bottom:1px solid #292930;position:sticky;top:0;z-index:10}
+.nav{max-width:1100px;margin:auto;padding:18px 20px;display:flex;justify-content:space-between;align-items:center}
+.logo{font-size:24px;font-weight:bold}.logo span{color:#ff3b30}
+nav a{color:#ddd;text-decoration:none;margin-left:20px}
+.hero{max-width:1100px;margin:auto;text-align:center;padding:80px 20px}
+.hero h1{font-size:48px;margin-bottom:18px}.hero h1 span{color:#ff3b30}
+.hero p{color:#aaa;font-size:18px}
+.section{max-width:1100px;margin:auto;padding:20px 20px 70px}
+h2{margin-bottom:25px}
+.featured,.card{background:#15151b;border:1px solid #303039;border-radius:15px;overflow:hidden}
+.featured{padding:30px;margin-bottom:60px}
+.featured h3{font-size:30px;margin-bottom:15px}
+.info{color:#aaa;margin:8px 0}
+.btn{display:inline-block;background:#ff3b30;color:white;text-decoration:none;padding:12px 20px;border-radius:7px;margin-top:15px;font-weight:bold;border:0;cursor:pointer}
+.events{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{padding:0}.card-body{padding:22px}.card h3{margin-bottom:12px}
+.loading{text-align:center;color:#aaa;padding:30px}
+.poster{width:100%;height:240px;object-fit:cover;background:#0e0e13;display:block}
+.featured-poster{width:100%;max-height:520px;object-fit:cover;border-radius:12px;margin-bottom:24px;background:#0e0e13}
+.no-image{height:240px;display:flex;align-items:center;justify-content:center;color:#777;background:#0e0e13}
+.featured .no-image{height:260px;border-radius:12px;margin-bottom:24px}
+.manage-wrap{max-width:1100px;margin:0 auto 40px;padding:0 20px}
+.manage{background:#111116;border:1px solid #303039;border-radius:15px;padding:22px}
+.manage summary{cursor:pointer;font-weight:bold;font-size:20px}
+.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin-top:20px}
+.form-grid .full{grid-column:1/-1}
+label{display:block;color:#bbb;font-size:14px;margin-bottom:6px}
+input,textarea,select{width:100%;background:#0b0b10;color:#fff;border:1px solid #363640;border-radius:8px;padding:12px;font:inherit}
+textarea{min-height:90px;resize:vertical}
+.preview{max-width:180px;max-height:180px;object-fit:cover;border-radius:10px;margin-top:10px;display:none}
+.form-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.status{color:#aaa;margin-top:12px;min-height:20px}
+.small{font-size:12px;color:#777;margin-top:8px}
+footer{text-align:center;border-top:1px solid #292930;padding:30px;color:#777}
+
+@media(max-width:700px){
+.hero h1{font-size:35px}.events{grid-template-columns:1fr}
+nav a{margin-left:10px;font-size:14px}.form-grid{grid-template-columns:1fr}
+.form-grid .full{grid-column:auto}.featured{padding:18px}
+}
+</style>
+</head>
+
+<body>
+
+<header>
+<div class="nav">
+<div class="logo">Band <span>Music Hub</span></div>
+<nav>
+<a href="#home">Home</a>
+<a href="#concerts">Concerts</a>
+</nav>
+</div>
+</header>
+
+<section class="hero" id="home">
+<h1>Discover <span>Live Music</span> in Bangladesh</h1>
+<p>Find upcoming concerts, live music events and ticket information from across Bangladesh.</p>
+</section>
+
+<!-- Manage Concerts: you can open this section and change the poster/details later. -->
+<div class="manage-wrap">
+<details class="manage">
+<summary>⚙️ Manage Concerts — Change Poster / Details</summary>
+
+<div class="form-grid">
+<div>
+<label>Select concert</label>
+<select id="concertSelect"><option value="">Loading...</option></select>
+</div>
+<div>
+<label>Concert name</label>
+<input id="editConcert" placeholder="Concert name">
+</div>
+<div>
+<label>Date</label>
+<input id="editDate" placeholder="e.g. 10 September 2026">
+</div>
+<div>
+<label>Time</label>
+<input id="editTime" placeholder="e.g. 7:00 PM">
+</div>
+<div>
+<label>Location / Venue</label>
+<input id="editLocation" placeholder="Venue, Dhaka">
+</div>
+<div>
+<label>Ticket URL</label>
+<input id="editTicket" placeholder="https://...">
+</div>
+<div class="full">
+<label>Description</label>
+<textarea id="editDescription" placeholder="Concert description"></textarea>
+</div>
+<div class="full">
+<label>Poster image</label>
+<input id="imageFile" type="file" accept="image/*">
+<img id="preview" class="preview" alt="Poster preview">
+<div class="small">Choose a poster from your phone/gallery. The image will be compressed before saving.</div>
+</div>
+</div>
+
+<div class="form-actions">
+<button class="btn" id="saveBtn" type="button">Save Changes</button>
+<button class="btn" id="newBtn" type="button">Add New Concert</button>
+</div>
+<div id="manageStatus" class="status"></div>
+<div class="small">
+For cloud saving, your Supabase table must allow the current public key to INSERT/UPDATE rows.
+</div>
+</details>
+</div>
+
+<section class="section">
+<h2>Featured Concert</h2>
+
+<div class="featured" id="featured">
+<div class="loading">Loading concert...</div>
+</div>
+
+<h2 id="concerts">Upcoming Concerts</h2>
+
+<div class="events" id="events">
+<div class="loading">Loading concerts...</div>
+</div>
+</section>
+
+<footer>
+© 2026 Band Music Hub<br>
+Bangladesh Concert & Music Events
+</footer>
+
+<script>
+const SUPABASE_URL = "https://ddlabynkdnaemvdfrmce.supabase.co";
+const SUPABASE_KEY = "sb_publishable_NUOua2PDUwhgWnfg1rUWTg_tMhEeLgk";
+
+let concerts = [];
+let selectedId = null;
+
+const $ = id => document.getElementById(id);
+
+function esc(value){
+  return String(value ?? "").replace(/[&<>"']/g, ch => ({
+    "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+  }[ch]));
+}
+
+function imageBlock(url, featured=false){
+  if(!url) return `<div class="${featured ? "no-image" : "no-image"}">No poster image</div>`;
+  return `<img class="${featured ? "featured-poster" : "poster"}" src="${esc(url)}" alt="Concert poster" loading="lazy">`;
+}
+
+function renderConcerts(){
+  const featured = $("featured");
+  const events = $("events");
+
+  if(!concerts.length){
+    featured.innerHTML = '<div class="loading">No concerts found.</div>';
+    events.innerHTML = '<div class="loading">No concerts found.</div>';
+    return;
+  }
+
+  const first = concerts[0];
+
+  featured.innerHTML = `
+    ${imageBlock(first.image_url, true)}
+    <h3>${esc(first.concert || first.title || "Concert")}</h3>
+    <p class="info">${esc(first.date || "")}</p>
+    <p class="info">${esc(first.time || "")}</p>
+    <p class="info">${esc(first.location || "")}</p>
+    <p class="info">${esc(first.description || "")}</p>
+    ${first.ticket_url ? `<a class="btn" href="${esc(first.ticket_url)}" target="_blank" rel="noopener">Get Tickets</a>` : ""}
+  `;
+
+  events.innerHTML = concerts.map(concert => `
+    <div class="card">
+      ${imageBlock(concert.image_url)}
+      <div class="card-body">
+        <h3>${esc(concert.concert || concert.title || "Concert")}</h3>
+        <p class="info">${esc(concert.date || "")}</p>
+        <p class="info">${esc(concert.time || "")}</p>
+        <p class="info">${esc(concert.location || "")}</p>
+        <p class="info">${esc(concert.description || "")}</p>
+        ${concert.ticket_url ? `<a class="btn" href="${esc(concert.ticket_url)}" target="_blank" rel="noopener">Get Tickets</a>` : ""}
+      </div>
+    </div>
+  `).join("");
+
+  const select = $("concertSelect");
+  select.innerHTML = concerts.map((c,i) =>
+    `<option value="${esc(c.id ?? i)}">${esc(c.concert || c.title || "Concert")}</option>`
+  ).join("");
+
+  if(selectedId !== null){
+    select.value = String(selectedId);
+  }
+  fillForm();
+}
+
+async function loadConcerts(){
+  const featured = $("featured");
+  const events = $("events");
+
+  try{
+    const response = await fetch(
+      SUPABASE_URL + "/rest/v1/concerts?select=*",
+      {
+        method:"GET",
+        headers:{
+          "apikey":SUPABASE_KEY,
+          "Authorization":"Bearer " + SUPABASE_KEY
+        }
+      }
+    );
+
+    const result = await response.text();
+    if(!response.ok){
+      const msg = "Supabase Error " + response.status + ": " + result;
+      featured.innerHTML = `<div class="loading">${esc(msg)}</div>`;
+      events.innerHTML = `<div class="loading">${esc(msg)}</div>`;
+      return;
+    }
+
+    concerts = JSON.parse(result);
+    renderConcerts();
+  }catch(error){
+    const msg = "Connection Error: " + error.message;
+    featured.innerHTML = `<div class="loading">${esc(msg)}</div>`;
+    events.innerHTML = `<div class="loading">${esc(msg)}</div>`;
+  }
+}
+
+function getSelectedConcert(){
+  const value = $("concertSelect").value;
+  return concerts.find((c,i) => String(c.id ?? i) === String(value)) || null;
+}
+
+function fillForm(){
+  const c = getSelectedConcert();
+  if(!c) return;
+  selectedId = c.id ?? $("concertSelect").selectedIndex;
+
+  $("editConcert").value = c.concert || c.title || "";
+  $("editDate").value = c.date || "";
+  $("editTime").value = c.time || "";
+  $("editLocation").value = c.location || "";
+  $("editTicket").value = c.ticket_url || "";
+  $("editDescription").value = c.description || "";
+
+  $("preview").style.display = c.image_url ? "block" : "none";
+  $("preview").src = c.image_url || "";
+  $("imageFile").value = "";
+  $("manageStatus").textContent = "";
+}
+
+function compressImage(file){
+  return new Promise((resolve,reject)=>{
+    const reader = new FileReader();
+    reader.onload = () => {
+      const img = new Image();
+      img.onload = () => {
+        const maxWidth = 1200;
+        const scale = Math.min(1, maxWidth / img.width);
+        const canvas = document.createElement("canvas");
+        canvas.width = Math.round(img.width * scale);
+        canvas.height = Math.round(img.height * scale);
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img,0,0,canvas.width,canvas.height);
+        resolve(canvas.toDataURL("image/webp",0.80));
+      };
+      img.onerror = reject;
+      img.src = reader.result;
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
+}
+
+$("concertSelect").addEventListener("change", fillForm);
+
+$("imageFile").addEventListener("change", async () => {
+  const file = $("imageFile").files[0];
+  if(!file) return;
+  try{
+    const data = await compressImage(file);
+    $("preview").src = data;
+    $("preview").style.display = "block";
+    $("manageStatus").textContent = "New poster selected. Press Save Changes.";
+  }catch(e){
+    $("manageStatus").textContent = "Could not read this image.";
+  }
+});
+
+$("saveBtn").addEventListener("click", async () => {
+  const c = getSelectedConcert();
+  if(!c || c.id == null){
+    $("manageStatus").textContent = "Select an existing concert first.";
+    return;
+  }
+
+  const status = $("manageStatus");
+  status.textContent = "Saving...";
+  let image_url = c.image_url || "";
+
+  try{
+    const file = $("imageFile").files[0];
+    if(file) image_url = await compressImage(file);
+
+    const payload = {
+      concert: $("editConcert").value.trim(),
+      date: $("editDate").value.trim(),
+      time: $("editTime").value.trim(),
+      location: $("editLocation").value.trim(),
+      description: $("editDescription").value.trim(),
+      ticket_url: $("editTicket").value.trim(),
+      image_url
+    };
+
+    const response = await fetch(
+      SUPABASE_URL + "/rest/v1/concerts?id=eq." + encodeURIComponent(c.id),
+      {
+        method:"PATCH",
+        headers:{
+          "apikey":SUPABASE_KEY,
+          "Authorization":"Bearer " + SUPABASE_KEY,
+          "Content-Type":"application/json",
+          "Prefer":"return=representation"
+        },
+        body:JSON.stringify(payload)
+      }
+    );
+
+    const result = await response.text();
+    if(!response.ok){
+      status.textContent = "Save failed: " + result;
+      return;
+    }
+
+    status.textContent = "Saved successfully!";
+    await loadConcerts();
+  }catch(error){
+    status.textContent = "Save failed: " + error.message;
+  }
+});
+
+$("newBtn").addEventListener("click", async () => {
+  const status = $("manageStatus");
+  status.textContent = "Adding...";
+  try{
+    let image_url = "";
+    const file = $("imageFile").files[0];
+    if(file) image_url = await compressImage(file);
+
+    const payload = {
+      concert: $("editConcert").value.trim() || "New Concert",
+      date: $("editDate").value.trim(),
+      time: $("editTime").value.trim(),
+      location: $("editLocation").value.trim(),
+      description: $("editDescription").value.trim(),
+      ticket_url: $("editTicket").value.trim(),
+      image_url
+    };
+
+    const response = await fetch(
+      SUPABASE_URL + "/rest/v1/concerts",
+      {
+        method:"POST",
+        headers:{
+          "apikey":SUPABASE_KEY,
+          "Authorization":"Bearer " + SUPABASE_KEY,
+          "Content-Type":"application/json",
+          "Prefer":"return=representation"
+        },
+        body:JSON.stringify(payload)
+      }
+    );
+
+    const result = await response.text();
+    if(!response.ok){
+      status.textContent = "Add failed: " + result;
+      return;
+    }
+
+    status.textContent = "Concert added successfully!";
+    await loadConcerts();
+  }catch(error){
+    status.textContent = "Add failed: " + error.message;
+  }
+});
+
+loadConcerts();
+</script>
+
+</body>
+</html>
