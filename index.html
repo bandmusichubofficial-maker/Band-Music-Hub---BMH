@@ -76,153 +76,134 @@ nav a{margin-left:10px;font-size:14px}
 Bangladesh Concert & Music Events
 </footer>
 
+
+
 <script>
 
-/* ================================
-   SUPABASE
-   ================================ */
-
 const SUPABASE_URL = "https://ddlabynkdnaemvdfrmce.supabase.co";
-
 const SUPABASE_KEY = "sb_publishable_zi8cKWC-0qIGVVcU3r6hyw_mL0cecoc";
 
+async function loadConcerts() {
 
-/* ================================
-   LOAD DATA
-   ================================ */
+    const featured = document.querySelector("#featured");
+    const events = document.querySelector("#events");
 
-async function loadConcerts(){
+    try {
 
-try{
+        const response = await fetch(
+            SUPABASE_URL + "/rest/v1/concerts?select=*",
+            {
+                method: "GET",
+                headers: {
+                    "apikey": SUPABASE_KEY,
+                    "Authorization": "Bearer " + SUPABASE_KEY
+                }
+            }
+        );
 
-const response = await fetch(
-SUPABASE_URL + "/rest/v1/concerts?select=*",
-{
-headers:{
-"apikey":SUPABASE_KEY,
-"Authorization":"Bearer " + SUPABASE_KEY
+        const result = await response.text();
+
+        console.log("Supabase status:", response.status);
+        console.log("Supabase response:", result);
+
+        if (!response.ok) {
+
+            const errorMessage =
+                "Supabase Error " +
+                response.status +
+                ": " +
+                result;
+
+            if (featured) {
+                featured.innerHTML =
+                    '<div class="loading">' +
+                    errorMessage +
+                    '</div>';
+            }
+
+            if (events) {
+                events.innerHTML =
+                    '<div class="loading">' +
+                    errorMessage +
+                    '</div>';
+            }
+
+            return;
+        }
+
+        const concerts = JSON.parse(result);
+
+        if (!concerts || concerts.length === 0) {
+
+            if (featured) {
+                featured.innerHTML =
+                    '<div class="loading">No concerts found.</div>';
+            }
+
+            if (events) {
+                events.innerHTML =
+                    '<div class="loading">No concerts found.</div>';
+            }
+
+            return;
+        }
+
+        const first = concerts[0];
+
+        if (featured) {
+            featured.innerHTML = `
+                <div class="concert-card">
+                    <h3>${first.concert || first.title || "Concert"}</h3>
+                    <p>${first.date || ""}</p>
+                    <p>${first.time || ""}</p>
+                    <p>${first.location || ""}</p>
+                    <p>${first.description || ""}</p>
+                    ${
+                        first.ticket_url
+                        ? `<a href="${first.ticket_url}" target="_blank">Get Tickets</a>`
+                        : ""
+                    }
+                </div>
+            `;
+        }
+
+        if (events) {
+
+            events.innerHTML = concerts.map(concert => `
+                <div class="concert-card">
+                    <h3>${concert.concert || concert.title || "Concert"}</h3>
+                    <p>${concert.date || ""}</p>
+                    <p>${concert.time || ""}</p>
+                    <p>${concert.location || ""}</p>
+                    <p>${concert.description || ""}</p>
+                    ${
+                        concert.ticket_url
+                        ? `<a href="${concert.ticket_url}" target="_blank">Get Tickets</a>`
+                        : ""
+                    }
+                </div>
+            `).join("");
+
+        }
+
+    } catch (error) {
+
+        console.error("Connection error:", error);
+
+        const message =
+            "Connection Error: " + error.message;
+
+        if (featured) {
+            featured.innerHTML =
+                '<div class="loading">' + message + '</div>';
+        }
+
+        if (events) {
+            events.innerHTML =
+                '<div class="loading">' + message + '</div>';
+        }
+    }
 }
-}
-);
-
-if(!response.ok){
-
-throw new Error(
-"Supabase request failed: " + response.status
-);
-
-}
-
-const concerts = await response.json();
-
-console.log("Concert data:",concerts);
-
-showFeatured(concerts);
-
-showConcerts(concerts);
-
-}catch(error){
-
-console.error(error);
-
-document.getElementById("featured").innerHTML =
-"<div class='loading'>Unable to load concert.</div>";
-
-document.getElementById("events").innerHTML =
-"<div class='loading'>Unable to load concerts.</div>";
-
-}
-
-}
-
-
-/* ================================
-   FEATURED
-   ================================ */
-
-function showFeatured(data){
-
-const box=document.getElementById("featured");
-
-if(!data.length){
-
-box.innerHTML="<div class='loading'>No concert available.</div>";
-
-return;
-
-}
-
-const c=data[0];
-
-box.innerHTML=`
-
-<h3>${c.title || c.concert || "Concert"}</h3>
-
-<p class="info">📅 Date: ${c.date || "Coming Soon"}</p>
-
-<p class="info">⏰ Time: ${c.time || "Coming Soon"}</p>
-
-<p class="info">📍 Location: ${c.location || "Bangladesh"}</p>
-
-<p class="info">${c.description || "Live music event in Bangladesh."}</p>
-
-${c.ticket_url ? `<a class="btn" href="${c.ticket_url}" target="_blank">Get Tickets</a>` : ""}
-
-`;
-
-}
-
-
-/* ================================
-   CONCERT LIST
-   ================================ */
-
-function showConcerts(data){
-
-const box=document.getElementById("events");
-
-if(!data.length){
-
-box.innerHTML="<div class='loading'>No upcoming concerts.</div>";
-
-return;
-
-}
-
-box.innerHTML="";
-
-data.forEach(c=>{
-
-const card=document.createElement("div");
-
-card.className="card";
-
-card.innerHTML=`
-
-<h3>${c.title || c.concert || "Concert"}</h3>
-
-<p class="info">📅 ${c.date || "Coming Soon"}</p>
-
-<p class="info">⏰ ${c.time || "Coming Soon"}</p>
-
-<p class="info">📍 ${c.location || "Bangladesh"}</p>
-
-<p class="info">${c.description || ""}</p>
-
-${c.ticket_url ? `<a class="btn" href="${c.ticket_url}" target="_blank">Buy Tickets</a>` : ""}
-
-`;
-
-box.appendChild(card);
-
-});
-
-}
-
-
-/* ================================
-   START
-   ================================ */
 
 loadConcerts();
 
