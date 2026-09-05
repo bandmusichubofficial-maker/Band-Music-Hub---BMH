@@ -49,7 +49,7 @@
     }
 
     nav a {
-      color: #dddddd;
+      color: #ddd;
       margin-left: 25px;
       font-size: 14px;
     }
@@ -152,10 +152,6 @@
       font-weight: bold;
     }
 
-    .ticket-btn:hover {
-      background: #e83228;
-    }
-
     .events {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
@@ -182,7 +178,13 @@
       justify-content: center;
       align-items: center;
       color: #777780;
-      font-size: 15px;
+      overflow: hidden;
+    }
+
+    .poster img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
 
     .card-content {
@@ -205,6 +207,13 @@
       font-size: 14px;
       line-height: 1.5;
       margin-top: 12px;
+    }
+
+    .loading,
+    .empty {
+      color: #9999a2;
+      text-align: center;
+      padding: 40px 10px;
     }
 
     footer {
@@ -259,186 +268,162 @@
 
 <body>
 
-  <header>
-    <div class="navbar">
-      <div class="logo">
-        Band <span>Music Hub</span>
-      </div>
-
-      <nav>
-        <a href="#home">Home</a>
-        <a href="#concerts">Concerts</a>
-      </nav>
+<header>
+  <div class="navbar">
+    <div class="logo">
+      Band <span>Music Hub</span>
     </div>
-  </header>
 
-  <section class="hero" id="home">
-    <h1>
-      Discover <span>Live Music</span> in Bangladesh
-    </h1>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#concerts">Concerts</a>
+    </nav>
+  </div>
+</header>
 
-    <p>
-      Find upcoming concerts, live music events and ticket information from across Bangladesh.
-    </p>
 
-    <div class="search-box">
-      <input type="text" placeholder="Search concerts...">
-      <button>Search</button>
+<section class="hero" id="home">
+
+  <h1>
+    Discover <span>Live Music</span> in Bangladesh
+  </h1>
+
+  <p>
+    Find upcoming concerts, live music events and ticket information from across Bangladesh.
+  </p>
+
+  <div class="search-box">
+    <input id="searchInput" type="text" placeholder="Search concerts...">
+    <button onclick="searchConcerts()">Search</button>
+  </div>
+
+</section>
+
+
+<section class="section">
+
+  <h2 class="section-title">
+    Featured Concert
+  </h2>
+
+  <div class="featured" id="featuredConcert">
+    <div class="loading">
+      Loading concert...
     </div>
-  </section>
+  </div>
 
-  <section class="section">
 
-    <h2 class="section-title">
-      Featured Concert
-    </h2>
+  <h2 class="section-title" id="concerts">
+    Upcoming Concerts
+  </h2>
 
-    <div class="featured">
+  <div class="events" id="concertList">
+    <div class="loading">
+      Loading concerts...
+    </div>
+  </div>
 
-      <h2>
-        Overload Festival Chittagong
-      </h2>
+</section>
 
-      <p>📅 Date: Coming Soon</p>
-      <p>⏰ Time: Coming Soon</p>
-      <p>📍 Location: Chittagong, Bangladesh</p>
+
+<footer>
+  © 2026 Band Music Hub
+  <br>
+  Bangladesh Concert & Music Events
+</footer>
+
+
+<script>
+
+  const SUPABASE_URL = "https://ddlabynkdnaemvdfrmce.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_zi8cKWC-0qIGVVcU3r6hyw_mL0cecoc";
+
+  let allConcerts = [];
+
+
+  async function loadConcerts() {
+
+    try {
+
+      const response = await fetch(
+        SUPABASE_URL + "/rest/v1/Band%20Music%20Hub?select=*",
+        {
+          headers: {
+            "apikey": SUPABASE_KEY,
+            "Authorization": "Bearer " + SUPABASE_KEY
+          }
+        }
+      );
+
+
+      if (!response.ok) {
+        throw new Error("Unable to load concerts");
+      }
+
+
+      const data = await response.json();
+
+      allConcerts = data;
+
+      displayFeatured(data);
+      displayConcerts(data);
+
+    } catch (error) {
+
+      document.getElementById("featuredConcert").innerHTML =
+        '<div class="empty">Concert information is currently unavailable.</div>';
+
+      document.getElementById("concertList").innerHTML =
+        '<div class="empty">Unable to load concerts.</div>';
+
+      console.log(error);
+
+    }
+
+  }
+
+
+  function getName(concert) {
+
+    return concert.title ||
+           concert.concert ||
+           concert.name ||
+           "Untitled Concert";
+
+  }
+
+
+  function displayFeatured(data) {
+
+    const box = document.getElementById("featuredConcert");
+
+    if (!data || data.length === 0) {
+
+      box.innerHTML =
+        '<div class="empty">No featured concert available.</div>';
+
+      return;
+    }
+
+
+    const concert = data[0];
+
+    const name = getName(concert);
+
+    box.innerHTML = `
+
+      <h2>${name}</h2>
+
+      <p>📅 Date: ${concert.date || "Coming Soon"}</p>
+
+      <p>⏰ Time: ${concert.time || "Coming Soon"}</p>
+
+      <p>📍 Location: ${concert.location || "Bangladesh"}</p>
 
       <p>
-        Experience an unforgettable live music event featuring amazing artists and bands.
+        ${concert.description || "Experience an unforgettable live music event."}
       </p>
 
-      <a href="#" class="ticket-btn">
-        Get Tickets
-      </a>
-
-    </div>
-
-
-    <h2 class="section-title" id="concerts">
-      Upcoming Concerts
-    </h2>
-
-    <div class="events">
-
-      <div class="card">
-
-        <div class="poster">
-          Concert Poster
-        </div>
-
-        <div class="card-content">
-
-          <h3>
-            Live Music Festival
-          </h3>
-
-          <p class="info">
-            📅 Date: Coming Soon
-          </p>
-
-          <p class="info">
-            ⏰ Time: Coming Soon
-          </p>
-
-          <p class="info">
-            📍 Location: Dhaka, Bangladesh
-          </p>
-
-          <p class="description">
-            Enjoy an exciting night of live music and performances.
-          </p>
-
-          <a href="#" class="ticket-btn">
-            Buy Tickets
-          </a>
-
-        </div>
-
-      </div>
-
-
-      <div class="card">
-
-        <div class="poster">
-          Concert Poster
-        </div>
-
-        <div class="card-content">
-
-          <h3>
-            Bangladesh Music Night
-          </h3>
-
-          <p class="info">
-            📅 Date: Coming Soon
-          </p>
-
-          <p class="info">
-            ⏰ Time: Coming Soon
-          </p>
-
-          <p class="info">
-            📍 Location: Dhaka, Bangladesh
-          </p>
-
-          <p class="description">
-            A special music night featuring talented Bangladeshi artists.
-          </p>
-
-          <a href="#" class="ticket-btn">
-            Buy Tickets
-          </a>
-
-        </div>
-
-      </div>
-
-
-      <div class="card">
-
-        <div class="poster">
-          Concert Poster
-        </div>
-
-        <div class="card-content">
-
-          <h3>
-            Live Band Show
-          </h3>
-
-          <p class="info">
-            📅 Date: Coming Soon
-          </p>
-
-          <p class="info">
-            ⏰ Time: Coming Soon
-          </p>
-
-          <p class="info">
-            📍 Location: Chittagong, Bangladesh
-          </p>
-
-          <p class="description">
-            Experience powerful live performances from local bands.
-          </p>
-
-          <a href="#" class="ticket-btn">
-            Buy Tickets
-          </a>
-
-        </div>
-
-      </div>
-
-    </div>
-
-  </section>
-
-  <footer>
-    © 2026 Band Music Hub
-    <br>
-    Bangladesh Concert & Music Events
-  </footer>
-
-</body>
-</html>
+      ${
+        concert.ticket_url
+        ? `<a href="${concert.ticket_url}" target="_blank" class="
