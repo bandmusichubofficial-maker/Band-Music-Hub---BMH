@@ -495,7 +495,7 @@ async function loadConcerts() {
   try {
 
     if (!SUPABASE_URL || !SUPABASE_KEY) {
-      throw new Error(
+    throw new Error(
         "Supabase URL or Publishable Key is missing."
       );
 
